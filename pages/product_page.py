@@ -24,12 +24,15 @@ class ProductPage(BasePage):
     def should_be_thing_in_basket(self, book_name):
         alert_book_name = self.browser.find_element(*ProductPageLocators.ALERT_BOOK_NAME)
         assert book_name == alert_book_name.text, "book name is {}, but alert book name is {}".format(book_name, alert_book_name.text)
-        # main_book_name = self.browser.find_element(*ProductPageLocators.MAIN_BOOK_NAME)
-        #assert main_book_name.text == alert_book_name.text, "book name is {}, but alert book name is {}".format(main_book_name.text, alert_book_name.text)
 
     def should_be_same_price(self, book_price):
         basket_price = self.browser.find_element(*ProductPageLocators.BASKET_PRICE)
         assert basket_price.text == book_price, "basket prise is {}, but book price is {}".format(basket_price.text, book_price)
-        # book_price = self.browser.find_element(*ProductPageLocators.BOOK_PRICE)
-        # assert basket_price.text == book_price.text, "basket prise is {}, but book price is {}".format(basket_price.text, book_price.text)
 
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should not be"
+
+    def should_be_disappeared_success_message(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is not disappeared, but should be"
