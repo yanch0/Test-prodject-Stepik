@@ -4,12 +4,11 @@ from .locators import ProductPageLocators
 
 class ProductPage(BasePage):
     def should_be_added_thing_in_basket(self):
-        self.go_to_basket_page()
+        self.add_to_basket_page()
         self.should_be_thing_in_basket()
         self.should_be_same_price()
 
-
-    def go_to_basket_page(self):
+    def add_to_basket_page(self):
         login_link = self.browser.find_element(*ProductPageLocators.ADD_PRODUCT_BTN)
         login_link.click()
 
