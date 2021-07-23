@@ -39,5 +39,5 @@ def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
     page.open()
     page.go_to_basket_page()
     page.should_be_basket_empty()
-    # Ожидаем, что есть текст о том, что корзина пуста
+
 
