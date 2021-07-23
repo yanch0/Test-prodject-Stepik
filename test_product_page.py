@@ -1,7 +1,10 @@
+import time
+
 import pytest
 from .pages.login_page import LoginPage
 from .pages.product_page import ProductPage
 from .pages.basket_page import BasketPage
+from .pages.base_page import BasePage
 
 from selenium import webdriver
 
@@ -81,10 +84,36 @@ def browser():
 
 # _____________________________________________________________________________________________
 
-def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
-    link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/"
-    page = BasketPage(browser, link)
-    page.open()
-    page.go_to_basket_page()
-    page.should_be_basket_empty()
-    # Ожидаем, что есть текст о том, что корзина пуста
+# def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+#     link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/"
+#     page = BasketPage(browser, link)
+#     page.open()
+#     page.go_to_basket_page()
+#     page.should_be_basket_empty()
+#     # Ожидаем, что есть текст о том, что корзина пуста
+
+# _____________________________________________________________________________________________
+
+class TestUserAddToBasketFromProductPage():
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207"
+        page = LoginPage(browser, link)
+        page.open()
+        page.go_to_login_page()
+        page.register_new_user()
+        page.should_be_authorized_user()
+
+    def test_user_cant_see_success_message(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_not_be_success_message()
+
+    def test_user_can_add_product_to_basket(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207"
+        page = ProductPage(browser, link)
+        page.open()
+        page.add_to_basket_page()
+        page.should_be_thing_in_basket(page.return_book_name())
+        page.should_be_same_price(page.return_book_price())

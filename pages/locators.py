@@ -23,3 +23,4 @@ class BasePageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     GO_TO_BASKET = (By.CSS_SELECTOR, ".btn-group .btn-default:nth-child(1)")
     BASKET_IS_NOT_EMPTY = (By.CSS_SELECTOR, ".basket-items")
+    USER_ICON = (By.CSS_SELECTOR, ".icon-user")
